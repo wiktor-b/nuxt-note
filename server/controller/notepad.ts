@@ -16,6 +16,8 @@ export const read = async () => {
   }
 };
 
+export type NotepadRead = Awaited<ReturnType<typeof read>>;
+
 export const create = async (evt: H3Event) => {
   try {
     const body = await readBody(evt);
@@ -35,6 +37,8 @@ export const create = async (evt: H3Event) => {
   }
 };
 
+export type NotepadCreate = Awaited<ReturnType<typeof create>>;
+
 export const detail = async (evt: H3Event) => {
   try {
     const result = await notepadModel.detail(evt.context.params?.id as string);
@@ -49,6 +53,8 @@ export const detail = async (evt: H3Event) => {
     });
   }
 };
+
+export type NotepadDetail = Awaited<ReturnType<typeof detail>>;
 
 export const update = async (evt: H3Event) => {
   try {
@@ -69,6 +75,8 @@ export const update = async (evt: H3Event) => {
   }
 };
 
+export type NotepadUpdate = Awaited<ReturnType<typeof update>>;
+
 export const remove = async (evt: H3Event) => {
   try {
     const result = await notepadModel.remove(evt.context.params?.id as string);
@@ -83,3 +91,5 @@ export const remove = async (evt: H3Event) => {
     });
   }
 };
+
+export type NotepadRemove = Awaited<ReturnType<typeof remove>>;

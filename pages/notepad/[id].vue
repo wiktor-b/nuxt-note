@@ -45,7 +45,7 @@
 </template>
 
 <script setup lang="ts">
-import type { NotepadModel } from "~~/server/model/notepad";
+import type { NotepadDetail } from "~/server/controller/notepad";
 
 useHead({
   title: "Edit Note",
@@ -72,21 +72,16 @@ const onSubmit = async () => {
   }
 };
 
-const fetchData = async () => {
-  try {
-    const {
-      data: { title, content },
-    } = (await $fetch("/api/notepad/" + route.params.id)) as {
-      data: NotepadModel;
-    };
-    form.title = title;
-    form.content = content;
-  } catch (error) {
-    console.error(error);
+const { data, pending, error } = await useFetch<NotepadDetail>(
+  `/api/notepad/${route.params.id}`
+);
 
-    alert("Note edit error");
-  }
-};
+if (!pending.value && data.value?.data) {
+  form.title = data.value.data.title;
+  form.content = data.value.data.content;
+}
 
-onMounted(fetchData);
+if (error.value) {
+  alert(`Note edit error ${error.value.message}`);
+}
 </script>
