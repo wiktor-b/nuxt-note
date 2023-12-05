@@ -1,5 +1,5 @@
 import { H3Event } from "h3";
-import * as notepadModel from "../model/notepad";
+import * as notepadModel from "~~/server/model/notepad";
 
 export const read = async () => {
   try {
@@ -8,7 +8,7 @@ export const read = async () => {
     return {
       data: result,
     };
-  } catch {
+  } catch (err) {
     throw createError({
       statusCode: 500,
       statusMessage: "Something went wrong",

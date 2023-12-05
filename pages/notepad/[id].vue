@@ -3,9 +3,9 @@
     <div class="text-xl font-semibold">Edit Note</div>
 
     <div class="mb-5">
-      <label for="title" class="block mb-2 text-sm font-medium text-gray-900"
-        >Title</label
-      >
+      <label for="title" class="block mb-2 text-sm font-medium text-gray-900">
+        Title
+      </label>
       <input
         v-model="form.title"
         type="text"
@@ -16,16 +16,16 @@
       />
     </div>
     <div class="mb-6">
-      <label for="content" class="block mb-2 text-sm font-medium text-gray-900"
-        >Content</label
-      >
+      <label for="content" class="block mb-2 text-sm font-medium text-gray-900">
+        Content
+      </label>
       <textarea
         v-model="form.content"
         id="content"
         rows="4"
         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
         placeholder="Write your content here..."
-      ></textarea>
+      />
     </div>
     <div class="relative flex justify-end mb-7">
       <NuxtLink
@@ -74,17 +74,19 @@ const onSubmit = async () => {
 
 const fetchData = async () => {
   try {
-    const result = (await $fetch("/api/notepad/" + route.params.id)) as {
+    const {
+      data: { title, content },
+    } = (await $fetch("/api/notepad/" + route.params.id)) as {
       data: NotepadModel;
     };
-    const data = result.data as NotepadModel;
-    form.title = data.title;
-    form.content = data.content;
+    form.title = title;
+    form.content = content;
   } catch (error) {
     console.error(error);
 
     alert("Note edit error");
   }
 };
+
 onMounted(fetchData);
 </script>
