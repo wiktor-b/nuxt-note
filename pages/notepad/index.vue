@@ -18,6 +18,12 @@
       <p>{{ notepad.content }}</p>
 
       <div class="flex justify-end pt-3">
+        <button
+          @click="onDelete(notepad.id)"
+          class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none"
+        >
+          Delete
+        </button>
         <NuxtLink
           :to="'/notepad/' + notepad.id"
           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none"
@@ -43,6 +49,18 @@ const fetchData = async () => {
     data.value = result.data as NotepadModel[];
   } catch {
     alert("Fetch error");
+  }
+};
+
+const onDelete = async (id: number) => {
+  try {
+    await $fetch("/api/notepad/" + id, {
+      method: "DELETE",
+    });
+
+    fetchData();
+  } catch {
+    alert("Delete error");
   }
 };
 onMounted(fetchData);
